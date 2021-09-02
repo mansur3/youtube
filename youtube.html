@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>YouTube</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+
+            /*container*/
+            #container {
+                width:100%;
+                margin:auto;
+                /* height:800px; */
+                /* border:2px solid black; */
+                background-color:ghostwhite;
+            }
+
+
+
+            /*navbar*/
+
+            #navbar {
+                width:100%;
+                height:80px;
+                background-color:white;
+                top:0;
+                display:flex;
+                flex-direction:row;
+            }
+
+
+            /*home icon*/
+            .home-icon {
+                width:20%;
+                height:60px;
+                /* background-color:green; */
+                margin-top:10px;
+            }
+
+            .home-icon img {
+                width:25%;
+                /* margin-left:20px;
+                 */
+                 float:left;
+                 margin-top:5px;
+
+                height:70%;
+            }
+            .home-icon p {
+                float:left;
+                font-size:30px;
+                margin-top:10px;
+            }
+
+            /*Search bar*/
+
+            .search-bar {
+                width:50%;
+                height:60px;
+                /* background-color:pink; */
+                margin-top:12px;
+                display:flex;
+                flex-direction:row;
+            }
+            #searchItem {
+                width:90%;
+                height:40%;
+                margin-top:8px;
+            }
+            #searchBtn {
+                height:50%;
+                width:13%;
+                margin-left:0px;
+                margin-top:8px;
+                padding-top:px;
+
+            }
+            #iconSize {
+                font-size:20px;
+            }
+
+            /*voice button*/
+            .voice-search {
+                width:5%;
+                height:60px;
+                /* background-color:red; */
+                margin-top:10px;
+
+            }
+            #voiceBtn {
+               width:60%;
+               height:60%;
+               margin-left:8px;
+               margin-top:4px;
+               border:0px;
+
+               border-radius:50%;
+           }
+
+
+           /*video icon*/
+
+
+            .video-live {
+                width:10%;
+                height:60px;
+                margin-top:10px;
+                /* background-color:blue;s */
+            }
+            #video {
+                width:45%;
+                height:60%;
+                float:right;
+                margin-top:4px;
+                border:0px;
+
+                background:white;
+
+            }
+            #videoIcon {
+                width:100%;
+                height:100%;
+                margin-top:3px;
+                font-size:27px;
+            }
+
+
+            /*app icon*/
+
+
+            .app {
+                width:5%;
+                height:60px;
+                margin-top:10px;
+                /* background-color:yellow; */
+            
+            }
+            #appIcon {
+                width:100%;
+                height:100%;
+                font-size:28px;
+
+                /* margin-right:10px; */
+            }
+            #app {
+                margin-top:8px;
+                margin-left:5px;
+                border:0px;
+            }
+            .notification {
+                width:5%;
+                height:60px;
+                margin-top:10px;
+                /* background-color:skyblue; */
+            }
+            #notify {
+                margin-left:5px;
+                margin-top:8px;
+                border:0px;
+            }
+
+
+            #bell {
+                font-size:28px;
+            }
+
+
+            .account {
+                width:5%;
+                height:60px;
+                margin-top:10px;
+                /* background-color:lightgreen; */
+            }
+          #showData {
+              display:grid;
+              grid-template-columns:30% 30% 30%;
+              grid-template-rows:300px 300px 300px;
+              grid-gap:1%;
+              /* margin:auto; */
+              margin-left:100px;
+          }
+
+          .home-icon:hover {
+              cursor: pointer;
+          }
+           
+          
+        </style>
+    </head>
+    <body>
+        <div id = "container">
+            <!--navbar-->
+            <div id = "navbar">
+                <div onclick = "mostPopular()" class = "home-icon">
+                    <img  src = "https://th.bing.com/th/id/OIP.dyCFJCFKwrC5V796-k9_BAHaHa?w=170&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7">
+                    <p>YouTube</p><sup>IN</sup>
+                </div>
+                <div class = "search-bar">
+                    <input type = "text" id = "searchItem" placeholder = "Search">
+                    <button id = "searchBtn" onclick = "search()"><i id = "iconSize" class="fa fa-search"></i>
+                    </button>
+                </div>
+                <div class = "voice-search">
+                    <button id = "voiceBtn"><i id = "iconSize" class="fa fa-microphone"></i></button>
+
+                </div>
+                <div class = "video-live">
+                    <button id = "video"><i id = "videoIcon" class="fa fa-video-camera" aria-hidden="true"></i></button>
+                    
+                </div>
+                <div class = "app">
+                    <button id = "app"><i id = "appIcon" class="fa fa-th" aria-hidden="true"></i></button>
+                    
+                </div>
+                <div class = "notification">
+                    <button id = "notify"> <i id = "bell" class="fa fa-bell-o" aria-hidden="true"></i></button>
+                   
+                </div>
+                <div class = "account">
+                    <button id = "notify"> <i id = "bell" class="fa fa-user" aria-hidden="true"></i></button>
+
+                   
+                </div>
+            </div>
+
+            <!--End navbar-->
+
+            <!--Start Showing Data-->
+            <div id = "showData">
+
+            </div>
+            <!--End show data-->
+        </div>
+    </body>
+</html>
+<script>
+    let parent = document.getElementById("showData");
+
+
+
+async function mostPopular() {
+    var res = await fetch("https://youtube.googleapis.com/youtube/v3/search?chart=mostPopular&regionCode=IN&type=video&key=AIzaSyBYIRNksaX5zjRZc-4YrVGzCASeSFTE4vI&maxResults=20");
+    var popular = await res.json();
+    for (let {id: {videoId}} of popular.items) {
+         var div = document.createElement("div");
+        div.id = "hold_frame";
+
+        var frame = document.createElement("iframe");
+        frame.src = `https://www.youtube.com/embed/${videoId}`;
+        frame.width = "300px";
+        frame.height = "300px";
+        frame.id = "frameId";
+        frame.allowFullscreen = true;
+        div.appendChild(frame);
+        parent.appendChild(div);
+
+    }
+}
+mostPopular();
+
+ async function search() {
+     parent.innerHTML = "";
+     var searchItem = document.getElementById("searchItem").value;
+
+     var response = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${searchItem}&type=video&key=AIzaSyBYIRNksaX5zjRZc-4YrVGzCASeSFTE4vI&maxResults=20`)
+    var data = await response.json();
+ 
+    for (let {id: {videoId}} of data.items) {
+         var div = document.createElement("div");
+        div.id = "hold_frame";
+
+        var frame = document.createElement("iframe");
+        frame.src = `https://www.youtube.com/embed/${videoId}`;
+        frame.width = "300px";
+        frame.height = "300px";
+        frame.id = "frameId";
+        frame.allowFullscreen = true;
+        div.appendChild(frame);
+        parent.appendChild(div);
+
+    }
+ 
+    }
+
+
+
+    //SHow data 
+    function showData(data) {
+        var div = document.createElement("div");
+        div.id = "holdData";
+
+
+        //video show div with
+        var div_video = document.createElement("div");
+
+        let video_frame = document.createElement("iframe");
+
+
+        //text showing div_video
+        var div_text = document.createElement("div");
+    }
+</script>
